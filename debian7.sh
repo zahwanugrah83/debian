@@ -13,7 +13,7 @@ flag=0
 
 #iplist="ip.txt"
 
-wget --quiet -O iplist.txt http://aliyahaura.tk:81/openvpn/iplist.txt
+wget "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/iplist.txt"
 
 #if [ -f iplist ]
 #then
@@ -74,15 +74,15 @@ sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 # install wget and curl
 apt-get update;apt-get -y install wget curl;
 
-# set time GMT +7
-ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+# set time GMT +8
+ln -fs /usr/share/zoneinfo/Asia/Malaysia /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service ssh restart
 
 # set repo
-wget -O /etc/apt/sources.list "http://aliyahaura.tk:81/repo/sources.list.debian7"
+wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/sources.list.debian7"
 wget http://www.dotdeb.org/dotdeb.gpg
 wget http://www.webmin.com/jcameron-key.asc
 cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
@@ -136,34 +136,34 @@ gem install lolcat
 # text warna
 cd
 rm -rf /root/.bashrc
-wget -O /root/.bashrc "http://aliyahaura.tk:81/debian/repo/.bashrc"
+wget -O /root/.bashrc "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/.bashrc"
 
 #install webserver
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "http://aliyahaura.tk:81/repo/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/nginx.conf"
 mkdir -p /home/vps/public_html
-wget -O /home/vps/public_html/index.html "http://aliyahaura.tk:81/repo/index.html"
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/index.html"
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
-wget -O /etc/nginx/conf.d/vps.conf $source/Debian7/vps.conf
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/vps.conf"
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 service nginx restart
 
 PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-useradd -M -s /bin/false aliya02
-echo "aliya:$PASS" | chpasswd
-echo "aliya" >> pass.txt
+useradd -M -s /bin/false zhangzi
+echo "mania:$PASS" | chpasswd
+echo "mania" >> pass.txt
 echo "$PASS" >> pass.txt
 #cp pass.txt /home/vps/public_html/
 #rm -f /root/pass.txt
 cd
 
 # install badvpn
-wget -O /usr/bin/badvpn-udpgw "http://aliyahaura.tk:81/repo/badvpn-udpgw"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/badvpn-udpgw"
 if [[ $OS == "x86_64" ]]; then
-  wget -O /usr/bin/badvpn-udpgw "http://aliyahaura.tk:81/repo/badvpn-udpgw64"
+  wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/badvpn-udpgw64"
 fi
 sed -i '$ i\screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300' /etc/rc.local
 chmod +x /usr/bin/badvpn-udpgw
@@ -171,8 +171,8 @@ screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 
 # install mrtg
 #apt-get update;apt-get -y install snmpd;
-wget -O /etc/snmp/snmpd.conf "http://aliyahaura.tk:81/repo/snmpd.conf"
-wget -O /root/mrtg-mem "http://aliyahaura.tk:81/repo/mrtg-mem.sh"
+wget -O /etc/snmp/snmpd.conf "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/snmpd.conf"
+wget -O /root/mrtg-mem "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/mrtg-mem.sh"
 chmod +x /root/mrtg-mem
 cd /etc/snmp/
 sed -i 's/TRAPDRUN=no/TRAPDRUN=yes/g' /etc/default/snmpd
@@ -202,18 +202,18 @@ cd
 apt-get -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=80/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 443"/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 442"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 sed -i 's/DROPBEAR_BANNER=""/DROPBEAR_BANNER="bannerssh"/g' /etc/default/dropbear
 service ssh restart
 service dropbear restart
 
-# upgrade dropbear 2014
+# upgrade dropbear 2016
 apt-get install zlib1g-dev
-wget https://matt.ucc.asn.au/dropbear/releases/dropbear-2012.55.tar.bz2
-bzip2 -cd dropbear-2012.55.tar.bz2 | tar xvf -
-cd dropbear-2012.55
+wget https://matt.ucc.asn.au/dropbear/releases/dropbear-2016.74.tar.bz2
+bzip2 -cd dropbear-2016.74.tar.bz2 | tar xvf -
+cd dropbear-2016.74
 ./configure
 make && make install
 mv /usr/sbin/dropbear /usr/sbin/dropbear1
@@ -344,12 +344,12 @@ service vnstat restart
 apt-get -y --force-yes -f install libxml-parser-perl
 
 # install pptp vpn
-wget http://aliyahaura.tk:81/debian7/pptp.sh
+wget https://raw.githubusercontent.com/zahwanugrah83/debian/debian/pptp.sh
 chmod +x pptp.sh
 ./pptp.sh
 
 # bannerssh
-wget http://aliyahaura.tk:81/bannerssh
+wget https://raw.githubusercontent.com/zahwanugrah83/debian/debian/bannerssh
 mv ./bannerssh /bannerssh
 chmod 0644 /bannerssh
 service dropbear restart
@@ -469,7 +469,7 @@ cd
 
 #download script
 cd /usr/bin
-wget -O menu.tar.gz "http://aliyahaura.tk:81/debian/menu/menu.tar.gz"
+wget -O menu.tar.gz "https://raw.githubusercontent.com/zahwanugrah83/debian/debian/menu.tar.gz"
 tar -xvf menu.tar.gz
 rm -f menu.tar.gz
 
@@ -522,7 +522,7 @@ mkswap /swapfile
 # jalan swapfile
 swapon /swapfile
 #auto star saat reboot
-wget http://aliyahaura.tk:81/repo/fstab
+wget https://raw.githubusercontent.com/zahwanugrah83/debian/debian/fstab
 mv ./fstab /etc/fstab
 chmod 644 /etc/fstab
 sysctl vm.swappiness=10
