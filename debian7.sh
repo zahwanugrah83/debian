@@ -334,11 +334,11 @@ service squid3 restart
 
 # install webmin
 cd
-wget "http://aliyahaura.tk:81/repo/webmin_1.801_all.deb"
-dpkg --install webmin_1.801_all.deb;
+wget -O webmin-current.deb http://prdownloads.sourceforge.net/webadmin/webmin_1.890_all.deb
+dpkg --install webmin_1.890_all.deb;
 apt-get -y -f install;
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-rm /root/webmin_1.801_all.deb
+rm /root/webmin_1.890_all.deb
 service webmin restart
 service vnstat restart
 apt-get -y --force-yes -f install libxml-parser-perl
