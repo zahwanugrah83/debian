@@ -1,0 +1,64 @@
+#!/bin/bash
+
+echo -e "------------------------ \e[032;1mTRIAL USER SSH\e[0m ------------------------" | lolcat
+echo -e "                    \e[032;1mALL SUPPORTED ALIYA HAURA\e[0m" | lolcat
+echo -e "              \e[032;1mhttps://www.facebook.com/aliyahaura02\e[0m" | lolcat
+echo -e "     \e[032;1mCONTACT SUPPORT Telegram @aliya haura SMS/WA 089697708638\e[0m" | lolcat
+
+echo "Please Wait..." | lolcat
+sleep 0.5
+echo "Generating Account..." | lolcat
+sleep 0.5
+echo "Generating Host..." | lolcat
+sleep 0.5
+echo "Generating Username..." | lolcat
+sleep 0.5
+echo "Generating Password..." | lolcat
+sleep 1
+MYIP=$(wget -qO- ipv4.icanhazip.com)
+passrandom=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+
+username=trial
+egrep "^$username" /etc/passwd >/dev/null
+if [ $? -eq 0 ]; then
+# proses mengganti passwordnya
+  echo -e "$passrandom\n$passrandom" | passwd $username
+  clear
+  echo " "  | lolcat
+  echo "Script by vps-murah.net" | boxes -d boy | lolcat
+  echo "Terimakasih sudah berlangganan di seller.vps.net" | lolcat
+  echo " " | lolcat
+  echo "Demikian Detail Account Trial Anda" | lolcat
+  echo "------------------------------" | lolcat
+  echo "   Host     : $MYIP"  | lolcat
+  echo "   Username : $username" | lolcat
+  echo "   Password : $passrandom" | lolcat
+  echo "   Dropbear Port: 443, 110, 80" | lolcat
+  echo "   OpenSSH Port: 22, 143" | lolcat
+  echo "   Squid Proxy: 90, 8080, 3128" | lolcat
+  echo "   OpenVPN Config: http://$MYIP:81/client.ovpn" | lolcat
+  echo "------------------------------" | lolcat
+  echo " " | lolcat
+  
+else
+  useradd trial
+  usermod -s /bin/false trial
+  egrep "^$username" /etc/passwd >/dev/null
+  echo -e "$passrandom\n$passrandom" | passwd $username
+  clear
+  echo " " | lolcat
+  echo "Script by seller-vps.net" | lolcat
+  echo "Terimakasih sudah berlangganan di seller-vps" | lolcat
+  echo " " | lolcat
+  echo "Demikian Detail Account Trial Anda" | lolcat
+  echo "------------------------------" | lolcat
+  echo "   Host     : $MYIP" | lolcat
+  echo "   Username : $username" | lolcat
+  echo "   Password : $passrandom" | lolcat
+  echo "   Dropbear Port: 443,  80" | lolcat
+  echo "   OpenSSH Port: 22, 143" | lolcat
+  echo "   Squid Proxy: 8000, 8080, 3128" | lolcat
+  echo "   OpenVPN Config: http://$MYIP:81/client.ovpn" | lolcat
+  echo "------------------------------"
+  echo " "
+fi

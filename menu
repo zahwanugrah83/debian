@@ -1,0 +1,182 @@
+#!/bin/bash
+clear
+
+# get the VPS IP
+#ip=`ifconfig venet0:0 | grep 'inet addr' | awk {'print $2'} | sed s/.*://`
+MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`;
+#MYIP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1)
+if [ "$MYIP" = "" ]; then
+	MYIP=$(wget -qO- ipv4.icanhazip.com)
+fi
+#myip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`;
+
+flag=0
+
+echo
+
+	#MYIP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1)
+	#if [ "$MYIP" = "" ]; then
+		#MYIP=$(wget -qO- ipv4.icanhazip.com)
+	#fi
+
+	clear
+lolcat -F 0.3 -S 0 /usr/bin/bannermenu
+echo "                           Server: $MYIP" | lolcat
+date +"                           %A, %d-%m-%Y" | lolcat
+date +"                                   %H:%M:%S %Z" | lolcat
+    echo ""
+    echo ""
+	echo "=======================================" | lolcat
+	echo "Apa yang ingin Anda lakukan?" | lolcat
+	echo -e "\e[01;1m 1\e[0m) \e[031;1mMembuat Akun SSH/OpenVPN\e[0m (\e[96;1muser-add\e[0m)" | lolcat
+	echo -e "\e[01;1m 2\e[0m) \e[031;1mMembuat Akun SSH/OpenVPN Trial 1 Hari\e[0m (\e[96;1muser-trial\e[0m)" | lolcat
+	echo -e "\e[01;1m 3\e[0m) \e[031;1mMembuat Banyak Akun SSH/OpenVPN\e[0m  (\e[96;1muser-gen\e[0m)" | lolcat
+	echo -e "\e[01;1m 4\e[0m) \e[031;1mMengganti Password Akun SSH/OpenVPN\e[0m (\e[96;1muser-pass\e[0m)" | lolcat
+	echo -e "\e[01;1m 5\e[0m) \e[031;1mMenambah Masa Aktif Akun SSH/OpenVPN\e[0m  (\e[96;1muser-renew\e[0m)" | lolcat
+    echo -e "\e[01;1m 6\e[0m) \e[031;1mMerubah Tanggal Expire Akun SSH/OpenVPN\e[0m (\e[96;1mrubah-tanggal\e[0m)" | lolcat	
+	echo -e "\e[01;1m 7\e[0m) \e[031;1mMenghapus Akun SSH/OpenVPN\e[0m  (\e[96;1muser-del\e[0m)" | lolcat
+	echo -e "\e[01;1m 8\e[0m) \e[031;1mMembuat Akun PPTP VPN\e[0m  (\e[96;1muser-add-pptp\e[0m)" | lolcat
+	echo -e "\e[01;1m 9\e[0m) \e[031;1mMonitoring Dropbear\e[0m  (\e[96;1mdropmon [PORT]\e[0m)" | lolcat
+	echo -e "\e[01;1m10\e[0m) \e[031;1mCek User Yang Sedang Login\e[0m  (\e[96;1muser-login\e[0m)" | lolcat
+	echo -e "\e[01;1m11\e[0m) \e[031;1mKill Multi Login Manual\e[0m  (\e[96;1m1-2 Login\e[0m) (\e[96;1muser-limit [x]\e[0m)" | lolcat
+	echo -e "\e[01;1m12\e[0m) \e[031;1mDaftar Akun dan Expire Date\e[0m  (\e[96;1muser-list\e[0m)" | lolcat
+	echo -e "\e[01;1m13\e[0m) \e[031;1mDaftar Akun Aktif\e[0m  (\e[96;1muser-active-list\e[0m)" | lolcat
+	echo -e "\e[01;1m14\e[0m) \e[031;1mDaftar Akun Expire\e[0m  (\e[96;1muser-expire-list\e[0m)" | lolcat
+	echo -e "\e[01;1m15\e[0m) \e[031;1mDisable Akun Expire\e[0m  (\e[96;1mdisable-user-expire\e[0m)" | lolcat
+	echo -e "\e[01;1m16\e[0m) \e[031;1mDelete Akun Expire\e[0m  (\e[96;1mdelete-user-expire\e[0m)" | lolcat
+	echo -e "\e[01;1m17\e[0m) \e[031;1mBanned Akun\e[0m  (\e[96;1mbanned-user\e[0m)" | lolcat
+	echo -e "\e[01;1m18\e[0m) \e[031;1mUnbanned Akun\e[0m  (\e[96;1munbanned-user\e[0m)" | lolcat
+	echo -e "\e[01;1m19\e[0m) \e[031;1mMemory Usage\e[0m  (\e[96;1mps-mem\e[0m)" | lolcat
+	echo -e "\e[01;1m20\e[0m) \e[031;1mSpeedtest\e[0m  (\e[96;1mspeedtest --share\e[0m)" | lolcat
+	echo ""
+    echo -e "\e[031;1m99\e[0m) Next    \e[031;1m x\e[0m) Exit" | lolcat
+	echo ""
+	read -p "Masukkan pilihan anda, kemudian tekan tombol ENTER: " option1
+	case $option1 in
+		1)
+		clear
+		user-add
+		exit
+		;;
+		2)
+		clear
+		user-trial
+		exit
+		;;
+		3)
+		clear
+		user-gen
+		exit
+		;;
+		4)
+		clear
+		user-pass
+		exit
+		;;
+		5)
+		clear
+		user-renew
+		exit
+		;;
+		6)
+		clear
+		rubah-tanggal
+		exit
+		;;
+		7)
+		clear
+		user-del
+		exit
+		;;
+		8)
+		clear
+		user-add-pptp
+		exit
+		;;
+		9)
+		clear
+		dropmon
+		exit
+		;;
+		10)
+		clear
+		user-login
+		exit
+		;;
+		11)
+		clear
+		read -p "Isikan Maximal Login (1-2): " MULTILOGIN
+		user-limit $MULTILOGIN
+		exit
+		;;
+		12)
+		clear
+		user-list | lolcat
+		exit
+		;;
+		13)
+		clear
+		user-active-list | boxes -d dog | lolcat
+	    break
+	    ;;
+	    "Daftar User Kadaluarsa")
+	    clear
+	    user-expire-list | lolcat
+		exit
+		;;
+		14)
+		clear
+		user-expire-list
+		exit
+		;;
+		15)
+		clear
+		disable-user-expire
+		exit
+		;;
+		16)
+		clear
+		delete-user-expire
+		exit
+		;;
+		17)
+		clear
+		banned-user
+		exit
+		;;
+		18)
+		clear
+		unbanned-user
+		exit
+		;;
+		19)
+		clear
+		ps-mem
+		exit
+		;;
+		20)
+		clear
+		echo "SPEEDTEST SERVER" | boxes -d peek | lolcat
+	    echo "-----------------------------------------"
+	    speedtest --share | lolcat
+	    echo "-----------------------------------------"
+		exit
+		;;
+		x)
+		clear
+		exit
+		;;
+		99)
+		clear
+	    next
+		exit
+		;;			
+		x)
+		clear
+		exit
+		;;
+	esac
+done
+
+
+

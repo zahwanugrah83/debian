@@ -1,0 +1,303 @@
+#!/bin/bash
+clear
+
+# get the VPS IP
+#ip=`ifconfig venet0:0 | grep 'inet addr' | awk {'print $2'} | sed s/.*://`
+MYIP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`;
+#MYIP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1)
+if [ "$MYIP" = "" ]; then
+	MYIP=$(wget -qO- ipv4.icanhazip.com)
+fi
+#myip=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1`;
+
+flag=0
+
+echo
+
+	#MYIP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1)
+	#if [ "$MYIP" = "" ]; then
+		#MYIP=$(wget -qO- ipv4.icanhazip.com)
+	#fi
+
+	clear
+lolcat -F 0.3 -S 0 /usr/bin/bannermenu
+echo "                           Server: $MYIP" | lolcat
+date +"                           %A, %d-%m-%Y" | lolcat
+date +"                                   %H:%M:%S %Z" | lolcat
+        echo ""
+       echo "=======================================" | lolcat
+        echo "Apa yang ingin anda lakukan?" | lolcat
+		echo -e "\e[031;1m21\e[0m) Merubah Jam Restar Atau Auto Reboot VPS" | lolcat
+		echo -e "\e[031;1m22\e[0m) URL Halaman Webmin VPS" | lolcat		
+		echo -e "\e[031;1m23\e[0m) bench-network" | lolcat
+		echo -e "\e[031;1m24\e[0m) Download Config OpenVPN" | lolcat
+		echo -e "\e[031;1m25\e[0m) Merubah Password VPS ( root )" | lolcat
+		echo -e "\e[031;1m26\e[0m) Merubah All  Port " | lolcat
+		echo -e "\e[031;1m27\e[0m) Merubah Port OpenVpn " | lolcat
+		echo -e "\e[031;1m28\e[0m) Edit banner Login ssh" | lolcat
+		echo -e "\e[031;1m29\e[0m) Bersihkan Cache Ram Manual" | lolcat
+		echo -e "\e[031;1m30\e[0m) Lihat Lokasi User" | lolcat
+        echo -e "\e[031;1m31\e[0m) Edit Banner Menu" | lolcat
+		echo -e "\e[031;1m32\e[0m) (ON) Auto Kill Multi Login" | lolcat
+        echo -e "\e[031;1m33\e[0m) (OFF) Auto Kill Multi Login" | lolcat
+		echo -e "\e[031;1m34\e[0m) Restart Server VPS" | lolcat
+		echo -e "\e[031;1m35\e[0m) Restart Dropbear " | lolcat
+		echo -e "\e[031;1m36\e[0m) Restart Squid3" | lolcat
+		echo -e "\e[031;1m37\e[0m) Restart OpenSSH" | lolcat
+		echo -e "\e[031;1m38\e[0m) Update script" | lolcat
+		echo ""
+	    echo -e "\e[031;1m98\e[0m) Menu Utama   \e[031;1m x\e[0m) Exit" | lolcat
+	    echo ""
+		read -p "Ketik angka sesuai pilihan, Dan tekan tombol ENTER: " option
+    case $option in
+        21)
+		  clear
+          auto-reboot
+		  exit
+           ;;
+        22)
+		    clear
+			echo "-------------------URL WEBMIN------------------------" | lolcat
+			echo ""
+			echo "Halaman Webmin $MYIP:10000" | lolcat
+			echo ""
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------"
+            exit
+            ;;			
+        23)
+            clear
+			echo "------------------- Bench-Network-------------------" | lolcat
+			echo ""
+			echo "BENCHMARK" | boxes -d peek | lolcat
+	        bench-network | lolcat
+			echo ""
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat
+			exit
+            ;;
+        24)
+            clear
+			echo "---------------- URL CONFIG OpenVPN -----------------" | lolcat
+			echo ""
+			echo "Download Config $MYIP:81/client.ovpn" | lolcat
+			echo ""
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat			
+			exit
+            ;;
+        25)
+            clear
+			echo "---------------MERUBAH PASSWORD ROOT-----------------" | lolcat
+			echo ""
+			read -p "Silahkan isi password baru untuk VPS anda: " pass	
+            echo "root:$pass" | chpasswd
+	        echo "Congratulations you've successfully changed the password VPS Good luck...!!!"| boxes -d boy | lolcat
+			echo ""
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat		    		   
+			exit
+            ;;
+        26)
+            clear
+			echo "---------------MERUBAH PORT-----------------" | lolcat
+			echo ""
+			rubah-port
+			echo ""
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat		    		   
+			exit
+            ;;
+        27)
+            clear
+			echo "---------------Edit Port OpenVpn-----------------" | lolcat
+			echo ""
+			echo "Silahkan ganti port OpenVPN anda lalu klik enter?"| boxes -d peek | lolcat
+            read -p "Port: " -e -i 55 PORT
+	    service dropbear stop
+	    service ssh stop
+	    service openvpn stop
+            sed -i "s/port [0-9]*/port $PORT/" /etc/openvpn/1194.conf
+	    cp /etc/openvpn/client.ovpn /home/vps/public_html/client.ovpn
+            sed -i "s/ipserver ports/$MYIP $PORT/g" /home/vps/public_html/client.ovpn
+	    sed -i "s/ipserver/$MYIP/g" /home/vps/public_html/client.ovpn
+	   service openvpn start
+	    service dropbear start
+	    service ssh start
+			echo ""
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat		    		   
+			exit
+            ;;
+        28)
+            clear
+			echo "---------------MERUBAH BANNER-----------------"
+			echo ""
+            echo -e "1.) Simpan text (CTRL + X, lalu ketik Y dan tekan Enter) "  | lolcat
+        	echo -e "2.) Membatalkan edit text (CTRL + X, lalu ketik N dan tekan Enter)"  | lolcat
+        	echo "-----------------------------------------------------------"  | lolcat
+        	read -p "Tekan ENTER untuk melanjutkan........................ "  | lolcat
+	        nano /bannerssh
+	        service dropbear restart && service ssh restart
+			echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat		    		   
+			exit
+            ;;
+        29)
+            clear
+            echo "---------------Bersihkan Cache Ram Manual-----------------" | lolcat
+			echo ""
+            echo "Sebelum..." | lolcat
+            free -h
+	        echo 1 > /proc/sys/vm/drop_caches
+	        sleep 1
+	        echo 2 > /proc/sys/vm/drop_caches
+	        sleep 1
+	        echo 3 > /proc/sys/vm/drop_caches && swapoff -a && swapon -a
+	        sleep 1
+	        echo ""
+	        echo "Sesudah..." | lolcat
+	        free -h
+	        echo "Congratulations you've successfully Clear cache ram." | boxes -d boy | lolcat
+            echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat	
+			exit
+            ;;
+        30)
+           clear
+           echo "---------------LOKASI USER-----------------" | lolcat
+		   echo ""
+           user-login
+	       echo "Contoh: 49.0.35.16 lalu Enter" | lolcat
+           read -p "Ketik Salah Satu Alamat IP User: " userip
+           curl ipinfo.io/$userip
+	       echo "-----------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat
+			exit
+            ;;
+        31)
+            clear
+            echo "---------------EDIT BANNER MENU-----------------" | lolcat
+			echo ""
+            echo "--------------------------------------------------------" | lolcat
+	        echo -e "1. Simpan text (CTRL + X, lalu ketik Y dan tekan ENTER)" | lolcat
+	        echo -e "2. Membatalkan edit text (CTRL + X,lalu ketik N dan tekan ENTER)" | lolcat
+	        echo "--------------------------------------------------------" | lolcat
+	        read -p "Tekan ENTER untuk melanjutkan..................." | lolcat
+	        nano /usr/bin/bannermenu		
+            echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat
+			exit
+            ;;
+        32)
+            clear
+            echo "---------------(ON) Auto Kill Multi Login-----------------" | lolcat
+			echo ""
+			read -p "Isikan Maximal User Login (1-2): " MULTILOGIN2
+	       #echo "@reboot root /root/userlimit.sh" > /etc/cron.d/userlimitreboot
+	        echo "* * * * * root /usr/bin/userlimit.sh $MULTILOGIN2" > /etc/cron.d/userlimit1
+	        echo "* * * * * root sleep 10; /usr/bin/userlimit.sh $MULTILOGIN2" > /etc/cron.d/userlimit2
+            echo "* * * * * root sleep 20; /usr/bin/userlimit.sh $MULTILOGIN2" > /etc/cron.d/userlimit3
+            echo "* * * * * root sleep 30; /usr/bin/userlimit.sh $MULTILOGIN2" > /etc/cron.d/userlimit4
+            echo "* * * * * root sleep 40; /usr/bin/userlimit.sh $MULTILOGIN2" > /etc/cron.d/userlimit5
+            echo "* * * * * root sleep 50; /usr/bin/userlimit.sh $MULTILOGIN2" > /etc/cron.d/userlimit6
+	       #echo "@reboot root /root/userlimitssh.sh" >> /etc/cron.d/userlimitreboot
+	        echo "* * * * * root /usr/bin/userlimitssh.sh $MULTILOGIN2" >> /etc/cron.d/userlimit1
+	        echo "* * * * * root sleep 11; /usr/bin/userlimitssh.sh $MULTILOGIN2" >> /etc/cron.d/userlimit2
+            echo "* * * * * root sleep 21; /usr/bin/userlimitssh.sh $MULTILOGIN2" >> /etc/cron.d/userlimit3
+            echo "* * * * * root sleep 31; /usr/bin/userlimitssh.sh $MULTILOGIN2" >> /etc/cron.d/userlimit4
+            echo "* * * * * root sleep 41; /usr/bin/userlimitssh.sh $MULTILOGIN2" >> /etc/cron.d/userlimit5
+            echo "* * * * * root sleep 51; /usr/bin/userlimitssh.sh $MULTILOGIN2" >> /etc/cron.d/userlimit6
+	    service cron restart
+	    service ssh restart
+	    service dropbear restart
+	    echo "------------+ Congratulations you've managed auto kill multi login +--------------"  | lolcat
+	    
+	echo "Damn you cheap!!! Your users are angry do not blame ane ya boss
+Later do not forget to turn off the boss
+Let user happy bs multilogin again .." | lolcat
+            echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat
+			exit
+            ;;
+        33)
+            clear
+            echo "---------------(OFF) Auto Kill Multi Login-----------------" | lolcat
+			echo ""
+			rm -rf /etc/cron.d/userlimit1
+         	rm -rf /etc/cron.d/userlimit2
+	        rm -rf /etc/cron.d/userlimit3
+	        rm -rf /etc/cron.d/userlimit4
+	        rm -rf /etc/cron.d/userlimit5
+	        rm -rf /etc/cron.d/userlimit6
+	        rm -rf /etc/cron.d/userlimitreboot
+    	service cron restart
+	    service ssh restart
+	    service dropbear restart
+	    clear
+	    echo "AUTO KILL LOGIN, I HAVE STOPED BOS
+Users Can Have Multi Log Again !!!!!!"  | lolcat
+            echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat
+			exit
+            ;;
+        34)
+            clear
+            reboot
+	        echo "sudah di restart waiting. . . . . .!!!" | boxes -d boy | lolcat
+            exit
+            ;;
+        35)
+            clear
+            service dropbear restart
+	        echo "Dropbear restart succes. . . .!!!" | boxes -d boy | lolcat
+            exit
+            ;;
+        36)
+            clear
+            service squid3 restart
+	        echo "Squid3 restart succes. . . .!!!" | boxes -d boy | lolcat
+            exit
+            ;;
+        37)
+            clear
+			service ssh restart
+	        echo "OpenSSH restart succes. . . .!!!" | boxes -d boy | lolcat
+			exit
+            ;;
+         38)
+            clear
+			echo "---------------UPDATE SCRIPT-----------------" | lolcat
+			echo ""
+			wget -O update.sh "http://aliyahaura.tk:81/update.sh"
+            chmod +x update.sh
+            ./update.sh
+            rm ./update.sh
+            echo "-----------------------------------------------------" | lolcat
+            echo -e "\e[032;1mScript Modified by Bayu Aldiansyah\e[0m" | lolcat
+            echo "-----------------------------------------------------" | lolcat
+			exit
+            ;;
+		98)
+		    clear
+			menu
+		    exit
+		    ;;			
+		x)
+		    clear
+		    exit
+		    ;;
+	esac
+done

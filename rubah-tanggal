@@ -1,0 +1,66 @@
+#!/bin/bash
+
+
+echo -e "------------------------ \e[032;1mRUBAH TANGGAL EXPIRED\e[0m ------------------------" | lolcat
+echo -e "                       \e[032;1mALL SUPPORTED ALIYA HAURA\e[0m" | lolcat
+echo -e "                 \e[032;1mhttps://www.facebook.com/aliyahaura02\e[0m" | lolcat
+echo -e "        \e[032;1mCONTACT SUPPORT Telegram @aliya hauraSMS/WA 089697708638\e[0m" | lolcat
+echo "-------------------------------" | lolcat
+echo "USERNAME          EXP DATE     " | lolcat
+echo "-------------------------------"
+while read expired
+do
+        AKUN="$(echo $expired | cut -d: -f1)"
+        ID="$(echo $expired | grep -v nobody | cut -d: -f3)"
+        exp="$(chage -l $AKUN | grep "Account expires" | awk -F": " '{print $2}')"
+        if [[ $ID -ge 1000 ]]; then
+        printf "%-17s %2s\n" "$AKUN" "$exp"
+        fi
+done < /etc/passwd
+echo "-------------------------------" | lolcat
+echo -e "\e[032;1mScript Modified by Aliya haura\e[0m" | lolcat
+echo "-------------------------------" | lolcat
+read -p "Isikan username: " uname
+read -p "Isikan Tanggal Expire (TH-BLN-TGL): " expdate
+read -p "Anda Akan Merubah Tanggal Expire SSH/OpenVPN Username $uname [y/n]:" -e -i y useradd
+if [ $useradd = 'y' ]; then
+usermod -e $expdate $uname
+exp="$(chage -l $uname | grep "Account expires" | awk -F": " '{print $2}')"
+echo "Rubah Tanggal Expire Username $uname Berhasil" | lolcat
+echo "-----------------------------------" | lolcat
+clear
+echo -e ""
+echo -e ""
+echo -e ""
+echo -e ""| lolcat
+echo -e "|       Informasi Akun Baru SSH      |" | boxes -d dog | lolcat
+echo -e "============[[-SERVER-PREMIUM-]]===========" | lolcat
+echo -e "     Host: $MYIP" | lolcat
+echo -e "     Username: $username" | lolcat
+echo -e "     Password: $password                   " | lolcat
+echo -e "     Port default dropbear: 443,80         " | lolcat
+echo -e "     Port default openSSH : 22,143         " | lolcat
+echo -e "     Port default squid   : 8000,8080,3128      " | lolcat
+echo -e "                                           " | lolcat
+echo -e "     Auto kill user maximal login 2        " | lolcat
+echo -e "-------------------------------------------" | lolcat
+echo -e "     Aktif Sampai: $(date -d "$AKTIF days" +"%d-%m-%Y")" | lolcat
+echo -e "===========================================" | lolcat
+echo -e "   DI LARANG:                              "| lolcat
+echo -e "   HACKING-DDOS-PHISING-SPAM-TORENT        " | lolcat
+echo -e "   CARDING-CRIMINAL CYBER.                 "| lolcat
+echo -e "===========================================" | lolcat
+echo -e "   Script by seller.vps.net              "| lolcat
+echo -e "   Config OVPN:                            "| lolcat
+echo -e "   http://$MYIP:81/client.ovpn        " | lolcat
+echo -e "-------------------------------------------" | lolcat
+echo -e ""
+echo -e ""
+
+else
+if [ $useradd = 'n' ]; then
+echo "Batal Rubah Tanggal Expire Username $uname" | lolcat
+fi
+fi
+exit 1
+cd ~/

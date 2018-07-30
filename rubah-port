@@ -1,0 +1,62 @@
+lolcat -F 0.3 -S 0 /usr/local/bin/bannermenu
+echo "                           Server: $MYIP" | lolcat
+date +"                           %A, %d-%m-%Y" | lolcat
+date +"                                   %H:%M:%S %Z" | lolcat
+        echo ""
+        echo ""
+	    echo "=======================================" | lolcat
+echo "Port Apa Yang Ingin Anda Rubah?" | lolcat
+	    echo ""
+		echo "1) Dropbear ( Port Standar Nya 443 )" | lolcat
+		echo "2) Squid ( Port Standar Nya 8080 )" | lolcat
+		echo "3) OpenVPN ( Port Standar Nya 1194 )" | lolcat
+		echo ""
+		read -p "Silahkan pilih service, Dan tekan tombol ENTER: " option
+    case $option in
+        1)
+		  clear
+            read -p "Silahkan Isi Port Dropbear Yang Baru: " PORT
+			read -p "Apakah Anda ingin Merubah SSH Dropbear ke Port $PORT [y/n]:" -e -i y portdropbear
+            if [ $portdropbear = 'y' ]; then
+            sed -i "s/DROPBEAR_PORT=[0-9]*/DROPBEAR_PORT=$PORT/" /etc/default/dropbear
+            service dropbear restart
+            echo "Dropbear Updated : Port $PORT"
+			else
+            if [ $portdropbear = 'n' ]; then
+            echo "Batal Merubah Port Dropbear" | lolcat
+            fi
+            fi
+		  exit
+           ;;
+        2)
+          clear
+            read -p "Silahkan Isi Port Squid Yang Baru: " PORT
+			read -p "Apakah Anda ingin Merubah Squid ke Port $PORT [y/n]:" -e -i y portsquid
+            if [ $portsquid = 'y' ]; then
+            sed -i "s/http_port [0-9]*/http_port $PORT/" /etc/squid3/squid.conf
+            service squid3 restart
+            echo "echo "Squid3 Updated : Port $PORT""
+			else
+            if [ $portsquid = 'n' ]; then
+            echo "Batal Merubah Port Squid" | lolcat
+            fi
+            fi			
+		  exit
+            ;;
+        3)
+          clear
+            read -p "Silahkan Isi Port OpenVPN Yang Baru: " PORT
+			read -p "Apakah Anda ingin Merubah OpenVPN ke Port $PORT [y/n]:" -e -i y portvpn
+            if [ $portvpn = 'y' ]; then
+            sed -i "s/port [0-9]*/port $PORT/" /etc/openvpn/1194.conf
+            service openvpn restart
+            echo "OpenVPN Updated : Port $PORT"
+			else
+            if [ $portvpn = 'n' ]; then
+            echo "Batal Merubah Port OpenVPN" | lolcat
+            fi
+            fi			
+		  exit
+            ;;
+	   esac
+   
